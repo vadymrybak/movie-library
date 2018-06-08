@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "./node_modules/.bin/ng serve  --proxy-config ./proxy.json --port 4200",
+    "server": "./node_modules/.bin/ts-node ./server/server.ts",
+    "build": "ng build --prod --base-href http:///vadymrybak.com/projects/movie_collection/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -20,7 +21,9 @@
     "@angular/platform-browser": "^6.0.2",
     "@angular/platform-browser-dynamic": "^6.0.2",
     "@angular/router": "^6.0.2",
+    "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
+    "jquery": "^3.3.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

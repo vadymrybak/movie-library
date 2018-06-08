@@ -1,0 +1,19 @@
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline">
+    <input class="form-control mr-lg-4" type="search" placeholder="Search" aria-label="Search">
+  </form>
+</nav>
+
+<div class="row">
+  <div class="col-2 col-sm-2">
+    Filter
+  </div>
+  <div class="col-10 col-sm-10">
+
+    <div class="row">
+        <app-movie-card *ngFor="let movie of movies" [movieName]="movie.name"></app-movie-card>
+    </div>
+
+  </div>
+
+</div>
