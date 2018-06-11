@@ -1,0 +1,13 @@
+.navbar  {
+    margin-bottom: 20px;
+}
+
+.filter {
+    background-color: #CCC;
+    background-clip: content-box;
+    padding: 5px;
+}
+
+.loading {
+    width: 30px;
+}

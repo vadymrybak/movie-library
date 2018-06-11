@@ -9,7 +9,7 @@ export const MOVIES: any = [{
     "trailer_link": null
   }, {
     "id": 2,
-    "name": "Other Side of the Bed, The (Otro lado de la cama, El)",
+    "name": "Other Side of the Bed",
     "genre": "Comedy|Drama|Musical|Romance",
     "year": 2001,
     "is_watched": false,
@@ -18,7 +18,7 @@ export const MOVIES: any = [{
     "trailer_link": null
   }, {
     "id": 3,
-    "name": "Out of Life (Hors la vie)",
+    "name": "Out of Life",
     "genre": "Drama",
     "year": 2000,
     "is_watched": true,
@@ -54,7 +54,7 @@ export const MOVIES: any = [{
     "trailer_link": null
   }, {
     "id": 7,
-    "name": "Comedians of Comedy, The",
+    "name": "Comedians of Comedy",
     "genre": "Comedy|Documentary",
     "year": 2000,
     "is_watched": true,

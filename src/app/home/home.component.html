@@ -1,17 +1,22 @@
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
-    <input class="form-control mr-lg-4" type="search" placeholder="Search" aria-label="Search">
+    <input class="form-control mr-lg-4" type="search" placeholder="Search" #search (keyup)="searchInputChanged(search.value)"> 
+    <img class="loading" *ngIf="loading" src="./assets/loading.gif" alt="loading" />
   </form>
 </nav>
 
 <div class="row">
-  <div class="col-2 col-sm-2">
-    Filter
+  <div class="col-2 col-sm-2 filter">
+    <p class="text-center">Filter</p>
+    <div>
+      <p>Year range</p>
+    </div>
+    
   </div>
   <div class="col-10 col-sm-10">
 
     <div class="row">
-        <app-movie-card *ngFor="let movie of movies" [movieName]="movie.name"></app-movie-card>
+        <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
     </div>
 
   </div>

@@ -2,6 +2,7 @@ import * as express from 'express';
 import {Application} from "express";
 
 import { getAllMovies } from "./get-movies";
+import { searchMovie } from "./search-movies";
 
 
 const app: Application = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 
 
 app.route('/data/movies').get(getAllMovies);
+app.route('/data/search').get(searchMovie);
 
 
 
