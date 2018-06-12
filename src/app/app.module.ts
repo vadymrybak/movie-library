@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { DataService } from './data.service';
 import { MovieCardComponent } from './movie-card/movie-card.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MovieCardComponent
+    MovieCardComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

@@ -3,11 +3,19 @@
 }
 
 .filter {
-    background-color: #CCC;
-    background-clip: content-box;
+    /* background-color: #CCC;
+    background-clip: content-box; */
     padding: 5px;
 }
 
 .loading {
     width: 30px;
+}
+
+.toSpan {
+    min-width: 49px;
+}
+
+.jumbotron {
+    width: 100%;
 }

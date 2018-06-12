@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, Output, EventEmitter } from '@angular/core';
 import Movie from '../model/movie';
 
 @Component({
@@ -7,6 +7,8 @@ import Movie from '../model/movie';
   styleUrls: ['./movie-card.component.css']
 })
 export class MovieCardComponent implements OnInit {
+  @Output() cardClicked: EventEmitter<any> = new EventEmitter();
+
   @HostBinding('class.col-12') col_xs: boolean = true;
   @HostBinding('class.col-sm-4') col_sm: boolean = true;
   @HostBinding('class.col-md-2') col_md: boolean = true;
@@ -17,6 +19,10 @@ export class MovieCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  clicked():void {
+    this.cardClicked.emit(this.movie);
   }
 
 }

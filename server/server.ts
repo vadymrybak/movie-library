@@ -3,6 +3,7 @@ import {Application} from "express";
 
 import { getAllMovies } from "./get-movies";
 import { searchMovie } from "./search-movies";
+import { updateWatch } from "./update-watch";
 
 
 const app: Application = express();
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 
 app.route('/data/movies').get(getAllMovies);
 app.route('/data/search').get(searchMovie);
+app.route('/data/updateWatch').put(updateWatch); // DONE
 
 
 

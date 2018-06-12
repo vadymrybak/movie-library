@@ -1,0 +1,63 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ currentMovie.name }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="movieImage text-center">
+            <img class="card-img-center" src="./assets/{{currentMovie.id}}.jpg" alt="{{ currentMovie.name }}_alt">
+          </div>
+          <hr>
+          <dl class="row">
+              <dt class="col-sm-3">Year</dt>
+              <dd class="col-sm-9">{{ currentMovie.year }}</dd>
+              <dt class="col-sm-3">Genre</dt>
+              <dd class="col-sm-9">{{ currentMovie.genre }}</dd>
+              <dt class="col-sm-3">Watched?</dt>
+              <dd class="col-sm-9">
+                  <input (change)="chkWatchedToggle($event)" #chkWatched class="form-check-input" type="checkbox" [checked]="currentMovie.is_watched === true">
+              </dd>
+              <dt class="col-sm-3">Trailer</dt>
+              <dd class="col-sm-9">{{ currentMovie.trailer_link ? currentMovie.trailer_link : "Not provided" }}</dd>
+              <dt class="col-sm-3">My rating</dt>
+              <dd class="col-sm-9">
+                  <div class="progress">
+                    <div class="progress-bar bg-warning" 
+                        role="progressbar" 
+                        [style.width.%]="currentMovie.my_rating * 10"
+                        [attr.aria-valuenow]="currentMovie.my_rating" 
+                        [attr.aria-valuemin]="0" 
+                        [attr.aria-valuemax]="10">{{currentMovie.my_rating}}/10</div>
+                  </div>
+              </dd>
+              <dt class="col-sm-3"></dt>
+              <dd class="col-sm-9 text-center">
+                  <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-sm btn-secondary" (click)="descreaseRating()">-</button>
+                      <button type="button" class="btn btn-sm btn-secondary" (click)="increaseRating()">+</button>
+                    </div>
+              </dd>
+          </dl>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>

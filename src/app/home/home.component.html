@@ -7,18 +7,48 @@
 
 <div class="row">
   <div class="col-2 col-sm-2 filter">
-    <p class="text-center">Filter</p>
-    <div>
-      <p>Year range</p>
+
+    <div class="card">
+      <div class="card-header text-center">
+        <strong>Filter</strong>
+      </div>
+      <div class="card-body">
+        <form name="frmYearRange">
+          <h6 class="card-title">Year Range:</h6>
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">From</span>
+            </div>
+            <input type="text" #txtFrom class="form-control"  aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text toSpan" id="inputGroup-sizing-sm">To</span>
+            </div>
+            <input type="text" #txtTo class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <button (click)="processFilter(txtFrom.value, txtTo.value)" type="button" class="btn btn-dark btn-block">Process</button>
+          <button (click)="clearFilter()" type="button" class="btn btn-secondary btn-block">Clear filter</button>
+        </form>
+      </div>
     </div>
     
   </div>
   <div class="col-10 col-sm-10">
 
+    <div class="jumbotron" *ngIf="movies?.length === 0">
+        <h1 class="display-12">Oops!</h1>
+        <p class="lead">There was no movies found...</p>
+        <hr class="my-12">
+        <p>Please try again by using different search criteria.</p>
+    </div>
+
     <div class="row">
-        <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+        <app-movie-card *ngFor="let movie of movies" [movie]="movie" (cardClicked)="clicked($event)" data-toggle="modal" data-target="#exampleModal"></app-movie-card>
     </div>
 
   </div>
 
 </div>
+
+<app-modal [currentMovie]="currentMovie" *ngIf="currentMovie" (movieUpdated)="movieUpdated($event)"></app-modal>

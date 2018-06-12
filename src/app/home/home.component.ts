@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { DataService } from '../data.service';
-import { FormControl } from '@angular/forms';
 
 import Movie from '../model/movie'; 
-
+import Search from '../model/Search';
+import Helper from '../model/helper';
 
 // RxJS
 import { Subject,Observable,BehaviorSubject, Subscriber, Subscription } from 'rxjs';
-
 import { tap, map, filter, scan, debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -16,23 +15,35 @@ import { tap, map, filter, scan, debounceTime, switchMap, distinctUntilChanged }
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  search:string = "";
+  @ViewChild('txtTo') txtTo: ElementRef;
+  @ViewChild('txtFrom') txtFrom: ElementRef;
+  @ViewChild('search') txtSearch: ElementRef;
+
+  search: Search = new Search("");
   loading: boolean = false;
   mainLoading: boolean = false;
 
   movies: Array<Movie>;
-  movies$: Subscription;
+  currentMovie: Movie;
 
-  movieSubject$ = new BehaviorSubject<string>(""); 
+  movieSubject$: BehaviorSubject<Search>;
 
-  constructor(private dataService: DataService) { }
+  @HostListener('window:scroll', [])
+  onScroll() {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      console.log("bottom of the page!");
+    }
+  }
+
+  constructor(private dataService: DataService) {
+    this.movieSubject$ = new BehaviorSubject<Search>(this.search); 
+  }
 
   ngOnInit() {
-
     this.movieSubject$.pipe(
       debounceTime(500),
       switchMap(search => { 
-        if (search === ""){
+        if (Helper.isEmptySearch(search)){
           this.mainLoading = true;
           return this.dataService.getMovies();
         }
@@ -40,25 +51,45 @@ export class HomeComponent implements OnInit {
           this.loading = true;
           return this.dataService.searchMovie(search);
         }
-      }),
-      tap((value) => {
-        
-      }),
+      })
     )
     .subscribe(data => {
       this.mainLoading = false;
       this.loading = false;
       this.movies = data;
     });
-
   }
 
   searchInputChanged(value): void{
-    this.movieSubject$.next(value);
+    this.search.query = value;
+    this.movieSubject$.next(this.search);
   }
 
-  ngOnDestroy() {
-    this.movies$.unsubscribe();
+  processFilter(from, to) {
+    this.search.from = from;
+    this.search.to = to;
+    this.movieSubject$.next(this.search);
+    console.log(from, to);
+  };
+
+  clearFilter() {
+    this.txtTo.nativeElement.value = "";
+    this.txtFrom.nativeElement.value = "";
+    this.txtSearch.nativeElement.value = "";
+    this.search = new Search("");
+    this.movieSubject$.next(this.search);
   }
+
+  clicked(event: Movie): void{
+    this.currentMovie = event;
+  };
+
+  ngOnDestroy() {
+    this.movieSubject$.unsubscribe();
+  }
+
+  movieUpdated(movie: Movie){
+    this.movies.find(movie_arr => movie_arr.id == movie.id).is_watched = movie.is_watched;
+  };
 
 }
