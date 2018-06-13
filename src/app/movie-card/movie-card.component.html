@@ -2,6 +2,6 @@
     <img class="card-img-top" src="./assets/{{movie.id}}.jpg" alt="{{ movie.name }}_alt">
     <div class="card-body">
       <p class="card-title">{{ movie.name }}</p>
-      <p class="card-text genre">{{ (movie.genre.length > 15)? (movie.genre | slice:0:15)+'..' : (movie.genre)  }}</p>
+      <p class="card-text genre">{{ (movie.genre.length > 10)? (movie.genre | slice:0:10)+'..' : (movie.genre)  }}</p>
     </div>
   </div>

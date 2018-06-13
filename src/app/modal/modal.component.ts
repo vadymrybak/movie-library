@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../data.service';
 import Movie from '../model/movie';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
@@ -13,15 +14,25 @@ export class ModalComponent implements OnInit {
   @Output() ratingUpdated: EventEmitter<any> = new EventEmitter();
   @Output() movieDeleted: EventEmitter<any> = new EventEmitter();
 
+  watch_result$: Subscription;
+
   constructor(private dataService: DataService) { }
 
   ngOnInit() {}
 
+  ngOnDestroy() {
+    this.watch_result$.unsubscribe();
+  }
+
   chkWatchedToggle(event: Event):void {
-    const watch_result$ = this.dataService.updateWatch(this.currentMovie.id, event.srcElement['checked']).subscribe(result => {
-      this.movieUpdated.emit(result);
-    }); 
-    watch_result$.unsubscribe();
+    this.watch_result$ = this.dataService.updateWatch(this.currentMovie.id, event.srcElement['checked'])
+    .subscribe(
+      result => {
+        this.movieUpdated.emit(result);
+      },
+      error => {
+        console.log("error", error);
+      }); 
   }
 
   descreaseRating():void {

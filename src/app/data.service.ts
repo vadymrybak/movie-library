@@ -6,12 +6,12 @@ import Search from "./model/Search";
 import {map} from "rxjs/operators";
 
 const links = {
-  getMovies: "/data/movies",
-  searchMovie: "/data/search",
-  watch: "/data/updateWatch",
-  rating: "/data/updateRating",
-  delete: "/data/deleteMovie",
-  movieCount: "/data/moviesCount"
+  getMovies: "data/movies.php",
+  searchMovie: "data/search.php",
+  watch: "data/updateWatch.php",
+  rating: "data/updateRating.php",
+  delete: "data/deleteMovie.php",
+  movieCount: "data/moviesCount.php"
 };
 
 const httpOptions = {
@@ -62,13 +62,13 @@ export class DataService {
   // Updates movie by id with watched/not watched value
   updateWatch(id: number, watched: boolean): Observable<Object> {
     let toSend = {id, watched};
-    return this.http.put(links.watch, toSend, { headers: httpOptions.headers } );
+    return this.http.post(links.watch, toSend, { headers: httpOptions.headers } );
   };
 
   // Updates movie rating
   updateMovieRating(id: number, rating: number): Subscription {
     let toSend = {id, rating};
-    return this.http.put(links.rating, toSend, { headers: httpOptions.headers } ).subscribe();
+    return this.http.post(links.rating, toSend, { headers: httpOptions.headers } ).subscribe();
   };
 
   // Deletes a movie by id
