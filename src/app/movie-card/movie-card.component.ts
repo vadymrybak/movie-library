@@ -9,9 +9,9 @@ import Movie from '../model/movie';
 export class MovieCardComponent implements OnInit {
   @Output() cardClicked: EventEmitter<any> = new EventEmitter();
 
-  @HostBinding('class.col-12') col_xs: boolean = true;
+  @HostBinding('class.col-6') col_xs: boolean = true;
   @HostBinding('class.col-sm-4') col_sm: boolean = true;
-  @HostBinding('class.col-md-2') col_md: boolean = true;
+  @HostBinding('class.col-md-4') col_md: boolean = true;
   @HostBinding('class.col-lg-2') col_lg: boolean = true;
 
   @Input() movie: Movie;

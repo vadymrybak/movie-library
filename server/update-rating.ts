@@ -1,17 +1,17 @@
 import {Request, Response} from 'express';
 import { MOVIES } from "./movies";
+import Movie from 'src/app/model/movie';
 
-export function updateWatch(req: Request, res: Response) {
+export function updateRating(req: Request, res: Response) {
     //console.log(req.body);
-    //console.log(res);
     const movieId = req.body.id;
-    //const courses = Object.values(COURSES);
     const movies = Object.keys(MOVIES).map(function(key) {
         return MOVIES[key];
     });
-    const movie = movies.find(movie => movie.id == movieId);  
 
-    movie.is_watched = req.body.watched;
+    const movie: Movie = movies.find(movie => movie.id == movieId);  
+
+    movie.my_rating = req.body.rating;
 
     res.status(200).json(movie);
 }

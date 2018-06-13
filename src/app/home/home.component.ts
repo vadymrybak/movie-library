@@ -21,17 +21,25 @@ export class HomeComponent implements OnInit {
 
   search: Search = new Search("");
   loading: boolean = false;
-  mainLoading: boolean = false;
+  mainLoading: boolean = true;
+  showFilter: boolean = true;
 
   movies: Array<Movie>;
+  movieCount: number;
   currentMovie: Movie;
 
   movieSubject$: BehaviorSubject<Search>;
 
+  startIndex: number = 0;
+  endIndex: number = 20;
+  step: number = 20;
+
   @HostListener('window:scroll', [])
   onScroll() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && this.movies.length < this.movieCount && Helper.isEmptySearch(this.search)) {
       console.log("bottom of the page!");
+      this.mainLoading = true;
+      this.movieSubject$.next(this.search);
     }
   }
 
@@ -40,12 +48,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const movieCount$ = this.dataService.getMoviesCount().subscribe(result => this.movieCount = result);
+
     this.movieSubject$.pipe(
       debounceTime(500),
       switchMap(search => { 
         if (Helper.isEmptySearch(search)){
           this.mainLoading = true;
-          return this.dataService.getMovies();
+          return this.dataService.getMovies(this.startIndex, this.endIndex);
         }
         else{
           this.loading = true;
@@ -56,11 +66,14 @@ export class HomeComponent implements OnInit {
     .subscribe(data => {
       this.mainLoading = false;
       this.loading = false;
+      this.endIndex = this.endIndex + this.step;
       this.movies = data;
     });
   }
 
   searchInputChanged(value): void{
+    if (value === "")
+      this.endIndex = this.step;
     this.search.query = value;
     this.movieSubject$.next(this.search);
   }
@@ -92,4 +105,10 @@ export class HomeComponent implements OnInit {
     this.movies.find(movie_arr => movie_arr.id == movie.id).is_watched = movie.is_watched;
   };
 
+  deleteMovie(movie: Movie):void {
+    console.log("movie: ", movie);
+    let index = this.movies.findIndex(d => d.id == movie.id);
+    console.log("index", index);
+    this.movies.splice(index, 1);
+  };
 }

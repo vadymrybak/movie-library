@@ -2,6 +2,10 @@
     margin-bottom: 20px;
 }
 
+.navbar p {
+    margin-bottom: 0;
+}
+
 .filter {
     /* background-color: #CCC;
     background-clip: content-box; */
@@ -18,4 +22,35 @@
 
 .jumbotron {
     width: 100%;
+}
+
+.caption {
+    font-weight: bold;
+    font-size: 1.5em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+.mainContent {
+    margin:0px auto;
+}
+
+@media (max-width: 575px) {
+    .filterButton {
+        margin-top: 5px;
+    }
+    .caption, .filterButton {
+        width: 100%;
+        text-align: center;
+    }
+
+    .loading {
+        margin: 0px auto;
+    }
+
+    .form-inline {
+        flex-flow: row-reverse;
+        display: contents;
+    }
 }

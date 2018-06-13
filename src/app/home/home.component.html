@@ -1,12 +1,17 @@
 <nav class="navbar navbar-light bg-light">
+    
   <form class="form-inline">
+      <img class="loading" *ngIf="loading" src="./assets/loading.gif" alt="loading" />
     <input class="form-control mr-lg-4" type="search" placeholder="Search" #search (keyup)="searchInputChanged(search.value)"> 
-    <img class="loading" *ngIf="loading" src="./assets/loading.gif" alt="loading" />
   </form>
+  
+  <p class="filterButton"><button type="button" class="btn btn-info" (click)="showFilter = !showFilter">Filter</button></p>
+  <p class="caption">All movies</p>
 </nav>
 
 <div class="row">
-  <div class="col-2 col-sm-2 filter">
+
+  <div class="col-12 col-sm-12 col-md-3 filter" *ngIf="showFilter">
 
     <div class="card">
       <div class="card-header text-center">
@@ -27,6 +32,9 @@
             </div>
             <input type="text" #txtTo class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
+          <h6 class="card-title">Genre:</h6>
+          <select class="form-control" name="" id=""></select>
+          <hr>
           <button (click)="processFilter(txtFrom.value, txtTo.value)" type="button" class="btn btn-dark btn-block">Process</button>
           <button (click)="clearFilter()" type="button" class="btn btn-secondary btn-block">Clear filter</button>
         </form>
@@ -34,7 +42,8 @@
     </div>
     
   </div>
-  <div class="col-10 col-sm-10">
+
+  <div class="col-11 col-sm-12 mainContent" [ngClass]="{ 'col-md-9' : showFilter, 'col-md-12' : !showFilter }">
 
     <div class="jumbotron" *ngIf="movies?.length === 0">
         <h1 class="display-12">Oops!</h1>
@@ -44,11 +53,26 @@
     </div>
 
     <div class="row">
-        <app-movie-card *ngFor="let movie of movies" [movie]="movie" (cardClicked)="clicked($event)" data-toggle="modal" data-target="#exampleModal"></app-movie-card>
+        <app-movie-card 
+        *ngFor="let movie of movies" 
+        [movie]="movie" 
+        (cardClicked)="clicked($event)" 
+        data-toggle="modal" 
+        data-target="#exampleModal"
+        >
+        </app-movie-card>
+    </div>
+    <div *ngIf="mainLoading" class="text-center">
+        <img class="mainLoading" *ngIf="mainLoading" src="./assets/loading-dots.gif" alt="loading" />
     </div>
 
   </div>
 
 </div>
 
-<app-modal [currentMovie]="currentMovie" *ngIf="currentMovie" (movieUpdated)="movieUpdated($event)"></app-modal>
+<app-modal 
+[currentMovie]="currentMovie" 
+*ngIf="currentMovie" 
+(movieUpdated)="movieUpdated($event)"  
+(movieDeleted)="deleteMovie($event)">
+</app-modal>
